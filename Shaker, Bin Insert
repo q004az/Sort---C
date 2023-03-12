@@ -70,3 +70,38 @@ void sort_bin_insert (int *a, int n) // Сортировка бинарными 
                     }
 
                     }
+
+
+template<class T>
+
+inline void insertSortGuarded(T a[], long size) {
+
+T x;
+
+long i, j;
+
+T backup = a[0]; // сохранить старый первый элемент
+
+setMin(a[0]); // заменить на минимальный
+
+for ( i=1; i < size; i++) { // отсортировать массив
+
+x = a[i];
+
+for ( j=i-1; a[j] > x; j--)
+
+a[j+1] = a[j];
+
+a[j+1] = x;
+
+}
+
+for(j=1;j<size&&a[j] <backup;j++) // вставить backup на правильное место
+
+a[j-1] = a[j];
+
+a[j-1] = backup; // вставка элемента
+
+}
+
+
