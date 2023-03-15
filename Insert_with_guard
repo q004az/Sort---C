@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+void shake_min_el(int *Massive, int n)
+{
+	int min_el = 0;
+	int temp;
+	
+	for (int i = 0;i < n;i++){
+		if (Massive[min_el] > Massive[i])
+			min_el = i;
+	}
+	
+	temp = Massive[min_el];
+	Massive[min_el] = Massive[0];
+	Massive[0] = temp;	
+}
+
+
+int Insert_sort(int *Massive, int n)
+{
+	int count = 0;
+	int temp;
+
+	for (int i = 1; i < n; i++)
+	{
+		for(int j = i; Massive[j-1] > Massive[j];j--)
+		{
+			temp = Massive[j-1];
+			Massive[j-1] = Massive[j];
+			Massive[j] = temp;
+			count+=2;
+		}
+	}
+	return count;
+}
+
+
+
+
+int main(int argc, char *argv[])
+{
+	srand(time(NULL));
+	int n = 1000;
+	int *mass = (int*)malloc(sizeof(int) * n);
+	
+	for(int i = 0; i < n;i++)
+	{
+		mass[i] = rand() % 1001;
+		printf("%4d",mass[i]);
+	}
+
+	shake_min_el(mass,n);
+	
+	printf("\n\n\n\n");
+	
+	Insert_sort(mass,n);
+	
+	for(int i = 0; i < n;i++)
+		printf("%4d",mass[i]);	
+			
+			
+	return 0;
+}
