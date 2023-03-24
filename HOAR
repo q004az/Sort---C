@@ -1,0 +1,26 @@
+void quick_sort(int *mass,int f, int l) //Массив, начало и конец
+{
+
+	int M = (f+l)/2;
+	int med = mass[M];
+	int i = f;
+	int j = l;
+	do{	
+	while (mass[i] < med) i++;
+	while (mass[j] > med) j--;
+	
+	if (i<=j)
+		{
+			int b = mass[i];
+			mass[i] = mass[j];
+			mass[j] = b;
+			i++;
+			j--;
+		}
+	}while(i<=j);
+	
+	if (f < j) quick_sort(mass,f,j);
+	
+	if (i < l) quick_sort(mass,i,l);
+	
+}
