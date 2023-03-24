@@ -34,13 +34,13 @@ int step_helper(int n) //Определяем какой будет делите
 void Insert_sort_with_step(int *Mass,int n, int step) //Вставки с шагом
 {
 	int temp;
-	for (int i = step; i < n; i+=step)
+	for (int i = step; i < n; i++)
 	{
-		for(int j = i; j > 0 && Mass[j-step] > Mass[j];j-=step)
+		for(int j = i - step; j >= 0 && Mass[j] > Mass[j+step];j-=step)
 		{
-			temp = Mass[j-step];
-			Mass[j-step] = Mass[j];
-			Mass[j] = temp;
+			temp = Mass[j];
+			Mass[j] = Mass[j+step];
+			Mass[j+step] = temp;
 		}
 	}
 }
