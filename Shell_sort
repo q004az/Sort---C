@@ -1,0 +1,85 @@
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+
+void create_mass(int *x,int n) //Создание массива
+{
+	for (int i = 0; i < n; i++)
+	{
+		x[i] = rand()%100;
+		printf("%4d",x[i]);
+	}
+}
+
+void printf_mass(int *x,int n) //Печать массива
+{ 
+	printf("\n");
+	for (int i = 0; i < n; i++)
+		printf("%4d",x[i]);
+}
+
+
+
+int step_helper(int n) //Определяем какой будет делитель для шага
+{   int step_devider = 0;
+
+	if (n <= 500)	
+		step_devider = 3;
+	else
+		step_devider = 2;
+	
+	return step_devider;
+}
+
+void Insert_sort_with_step(int *Mass,int n, int step) //Вставки с шагом
+{
+	int temp;
+	for (int i = step; i < n; i+=step)
+	{
+		for(int j = i; j > 0 && Mass[j-step] > Mass[j];j-=step)
+		{
+			temp = Mass[j-step];
+			Mass[j-step] = Mass[j];
+			Mass[j] = temp;
+		}
+	}
+}
+
+void shell_sort(int *Mass,int n) //Сортировка Шелла
+{
+	int step_devider = step_helper(n); 
+
+	int step = n;
+	
+	int step_1  = (step - 1) /step_devider ;
+
+	if (step_1 < 1)
+		step_1 = 1;
+	
+	while (step_1 >= 1)
+	{
+		Insert_sort_with_step(Mass,n,step_1);
+		
+		step = step_1;
+		
+		step_1 = (step - 1) / step_devider;
+		
+		if (step_1 < 1 && step!=1)
+			step_1 = 1;			
+	}
+}
+
+
+int main(int argc, char *argv[])
+{
+	system("chcp 65001");
+	srand(time(NULL));
+	int n;
+	scanf("%d",&n);
+	int *x = (int*)malloc(sizeof(int)*n);
+	create_mass(x,n);
+	shell_sort(x,n);
+	printf_mass(x,n);
+	
+	return 0;
+}
