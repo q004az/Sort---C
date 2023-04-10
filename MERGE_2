@@ -1,0 +1,35 @@
+void mergeAbstract(int* x,int F,int M,int L, int *count)
+{
+    int n = L - F + 1;
+    int *x_1 = (int*)malloc(sizeof(int) * (L+1)); 
+    int i = 0;
+	int j = n - 1;
+	int k = F;
+    for(int s = 0; s < M+1-F; s++) 
+    {
+		x_1[s] = x[F + s];
+		(*count)++;
+	}
+    for(int s = M+1-F; s < n; s++) 
+    {
+		x_1[s] = x[L - (s - (M+1-F))];
+		(*count)++;
+	}
+
+    while(i <= j)
+    {
+        if(x_1[i] > x_1[j])
+        {
+            x[k] = x_1[j--];
+            (*count)++;
+    	}
+        else
+		{ 
+			x[k] = x_1[i++];
+			(*count)++;
+    	}
+        k++;
+    }
+
+free(x_1);
+}
