@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+void mergeAbstract(int* x,int F,int M,int L)
+{
+    int n = L - F + 1;
+    int *x_1 = (int*)malloc(sizeof(int) * (L+1)); 
+    int i = 0;
+	int j = n - 1;
+	int k = F;
+    for(int s = 0; s < M+1-F; s++) x_1[s] = x[F + s];
+    for(int s = M+1-F; s < n; s++) x_1[s] = x[L - (s - (M+1-F))];
+
+    while(i <= j)
+    {
+        if(x_1[i] > x_1[j])
+            x[k] = x_1[j--];
+
+        else  x[k] = x_1[i++];
+            
+        k++;
+    }
+
+free(x_1);
+}
+
+void top_down_merge_sort(int *x, int F, int L)
+{
+	long M;
+	
+	if (F < L)
+	{
+		M = (L+F)/2;
+		top_down_merge_sort(x, F, M);
+		top_down_merge_sort(x, M+1,L);
+		mergeAbstract(x, F, M, L);
+	}
+}
+
+void print(int *x, int n)
+{
+	for (int i = 0; i < n; i++)
+		printf("%4d",x[i]);
+	printf("\n\n\n\n");
+}
+
+
+int main(int argc, char *argv[])
+{
+	int n = 100;
+
+	int *x = (int*)malloc(sizeof(int) *n);
+	
+	for (int i = 0 ; i < n; i++)
+		x[i] = rand()%50;
+	print(x, n);
+	top_down_merge_sort(x,0,n-1);
+	print(x,n);
+	return 0;
+}
